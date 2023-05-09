@@ -1,0 +1,62 @@
+{
+  "name": "amesride-api",
+  "version": "0.0.1",
+  "license": "GNU3",
+  "description": "Backend to power the Ames Ride app.",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "ts-mocha 'src/test/**/*.ts'",
+    "test:coverage": "nyc --reporter=html ts-mocha 'src/test/**/*.ts'",
+    "lint": "eslint .",
+    "start": "node build/index.js",
+    "dev": "npm run build && node build/index.js"
+  },
+  "keywords": [
+    "transportation",
+    "Iowa State University",
+    "bus",
+    "CyRide",
+    "Ames",
+    "Iowa",
+    "GTFS"
+  ],
+  "author": "Demers, Patrick",
+  "dependencies": {
+    "adm-zip": "^0.5.10",
+    "csv-parser": "^3.0.0",
+    "date-fns": "^2.29.3",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "gtfs-realtime-bindings": "^1.1.1",
+    "long": "^5.2.1",
+    "object-hash": "^3.0.0",
+    "prom-client": "^14.1.1",
+    "socket.io": "^4.5.4",
+    "source-map-loader": "^4.0.1",
+    "ts-loader": "^9.4.2",
+    "unleash-client": "^3.19.0",
+    "winston": "^3.8.2",
+    "winston-loki": "^6.0.6"
+  },
+  "devDependencies": {
+    "@types/adm-zip": "^0.5.0",
+    "@types/chai": "^4.3.4",
+    "@types/express": "^4.17.17",
+    "@types/mocha": "^10.0.1",
+    "@types/sinon": "^10.0.13",
+    "@typescript-eslint/eslint-plugin": "^5.51.0",
+    "@typescript-eslint/parser": "^5.51.0",
+    "chai": "^4.3.7",
+    "eslint": "^8.33.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "mocha": "^10.2.0",
+    "msw": "^1.2.1",
+    "nyc": "^15.1.0",
+    "prettier": "2.8.3",
+    "sinon": "^15.0.1",
+    "ts-mocha": "^10.0.0",
+    "typescript": "^4.9.4"
+  }
+}

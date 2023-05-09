@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+      "outDir": "./build",
+      "allowJs": true,
+      "lib": ["es2021", "dom"],
+      "esModuleInterop": true,
+      "target": "ES2020",
+      "moduleResolution": "Node",
+      "module": "CommonJS",
+      "sourceMap": true
+    },
+    "include": ["./src/**/*.ts", "global.d.ts"],
+}
