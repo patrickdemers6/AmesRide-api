@@ -124,7 +124,8 @@ class GTFSVehiclePositionDataAdapter
     return (
       vehicle.vehicle.position?.latitude &&
       vehicle.vehicle.position?.longitude &&
-      vehicle.vehicle.vehicle.id
+      vehicle.vehicle.vehicle.id &&
+      vehicle.vehicle.trip
     );
   }
 
