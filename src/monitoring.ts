@@ -29,6 +29,17 @@ export const managerSubscribeCount = new Counter({
   help: "Ames Ride total messages received subscribing to message type",
 });
 
+export const staticDataRequestCount = new Counter({
+  name: "amesride_static_request_count",
+  labelNames: ["os", "version", "validHash"],
+  help: "Ames Ride total requests processed for static data.",
+});
+
+export const staticDataRequestTotalBytes = new Counter({
+  name: "amesride_static_request_bytes",
+  help: "Ames Ride total bytes sent for static data.",
+});
+
 const setupMonitoring = () => {
   const app = express();
   const server = http.createServer(app);

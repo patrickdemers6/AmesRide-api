@@ -4,7 +4,11 @@ import { Server } from "socket.io";
 import StaticGTFS from "./gtfs/static";
 import Manager from "./ws-managers/manager";
 import setupWebsockets from "./websockets";
-import setupMonitoring, { log } from "./monitoring";
+import setupMonitoring, {
+  log,
+  staticDataRequestCount,
+  staticDataRequestTotalBytes,
+} from "./monitoring";
 import config from "./config_new";
 import getRealtimeFactory from "./gtfs/factory";
 
@@ -39,11 +43,22 @@ StaticGTFS.updateGTFS().then(() => {
 });
 
 app.get("/data", (req, res) => {
-  if (req.query?.hash === StaticGTFS.hash) {
+  let os: string, version: string;
+  os = version = "unknown";
+
+  if (typeof req.query?.os === "string") os = req.query.os;
+  if (typeof req.query?.version === "string") version = req.query.version;
+
+  const validHash = req.query?.hash === StaticGTFS.hash;
+  if (validHash) {
     res.sendStatus(204);
-    return;
+  } else {
+    res.send(StaticGTFS.publicData);
+    staticDataRequestTotalBytes.inc(StaticGTFS.publicData.length);
   }
-  res.send(StaticGTFS.publicData);
+
+  const labels = { os, version, validHash: validHash ? "true" : "false" };
+  staticDataRequestCount.labels(labels).inc();
 });
 
 const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000;
