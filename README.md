@@ -10,17 +10,11 @@ The frontend of the application is written in React Native and can be viewed [he
 
 # Overview
 
-This is the backend which will eventually be used to power Ames Ride.
-When a user wants to subscribe to vehicle locations or upcoming arrivals, they send the request using a Websocket connection to this backend. Upon receiving a request, this backend subscribes the user to receive updates.
-Whenever new data is available for the route or bus stop the user cares about, a new message will be sent with updated information.
+This is the backend used to power Ames Ride.
+When a user wants to subscribe to vehicle locations or upcoming arrivals, the frontend sends the request using a Websocket connection to this backend. 
+Whenever new data is available for the route or bus stop the user cares about, a new message is sent with updated information.
 
-Currently, the front end is using a pull system in which it polls the CyRide API for updated information. This places strain on the server and would render the application obsolete if an API change occured.
-
-This project is designed to be as data-source agnostic as possible, allowing for easy modifications to the data retreival process if/when it is needed.
-
-# Current State
-
-Currently, this API is in active development. It works well with the [beta frontend](https://github.com/patrickdemers6/AmesRide/tree/websockets), but additional testing is needed before it is ready to be rolled out to the public. Please open an issue if you would like to get involved in beta testing.
+This project is designed to be as data-source agnostic as possible, allowing for easy modifications to the data retreival process.
 
 # Privacy
 
@@ -28,4 +22,4 @@ Ames Ride is a privacy respecting application and has no intention of capturing 
 
 - This backend only receives route and stop information from a user. This is used to provide upcoming arrival and vehicle locations.
 - There is no tracking between sessions. As soon as the connection to the backend terminates (by closing the app), the session is completely forgotten about.
-- Any collection of analytics is broad and anonymized. Examples include the number of users connected to the backend at a given time or number of vehicle location requests. Data is aggregated using Grafana.
+- Any collection of analytics is broad and anonymized. Examples include the number of users connected to the backend at a given time or number of vehicle location requests. Data is published using Prometheus and analyzed in Grafana.
