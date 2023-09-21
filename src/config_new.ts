@@ -25,6 +25,9 @@ const config = {
       },
     },
   ],
+  static: {
+    url: "https://mycyride.com/gtfs",
+  },
 };
 
 export default config;

@@ -1,7 +1,7 @@
 import express from "express";
 import http from "http";
 import { Server } from "socket.io";
-import StaticGTFS from "./gtfs/static";
+import StaticGTFS from "./providers/static-providers/gtfs";
 import Manager from "./ws-managers/manager";
 import setupWebsockets from "./websockets";
 import setupMonitoring, {
@@ -10,16 +10,16 @@ import setupMonitoring, {
   staticDataRequestTotalBytes,
 } from "./monitoring";
 import config from "./config_new";
-import getRealtimeFactory from "./gtfs/factory";
+import getRealtimeFactory from "./providers/factory";
 
 const app = express();
 const httpsServer = http.createServer(app);
 
 setupMonitoring();
 
-export const staticGtfs = new StaticGTFS();
+export const staticGtfs = new StaticGTFS(config.static);
 
-StaticGTFS.updateGTFS().then(() => {
+staticGtfs.updateGTFS().then(() => {
   const io = new Server(httpsServer);
 
   const providers = [];
@@ -49,12 +49,12 @@ app.get("/data", (req, res) => {
   if (typeof req.query?.os === "string") os = req.query.os;
   if (typeof req.query?.version === "string") version = req.query.version;
 
-  const validHash = req.query?.hash === StaticGTFS.hash;
+  const validHash = req.query?.hash === staticGtfs.hash;
   if (validHash) {
     res.sendStatus(204);
   } else {
-    res.send(StaticGTFS.publicData);
-    staticDataRequestTotalBytes.inc(StaticGTFS.publicData.length);
+    res.send(staticGtfs.publicData);
+    staticDataRequestTotalBytes.inc(staticGtfs.publicData.length);
   }
 
   const labels = { os, version, validHash: validHash ? "true" : "false" };
@@ -63,4 +63,4 @@ app.get("/data", (req, res) => {
 
 const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000;
 
-setInterval(StaticGTFS.updateGTFS, TWENTY_FOUR_HOURS);
+setInterval(staticGtfs.updateGTFS, TWENTY_FOUR_HOURS);
