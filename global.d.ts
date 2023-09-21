@@ -1,6 +1,6 @@
 import { Socket } from "socket.io";
 import { DefaultEventsMap } from "socket.io/dist/typed-events";
-import Time from "./src/gtfs/time";
+import Time from "./src/providers/time";
 import EventEmitter from "events";
 
 declare global {

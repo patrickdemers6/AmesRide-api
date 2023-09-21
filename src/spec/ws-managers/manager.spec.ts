@@ -1,6 +1,6 @@
 import MockedSocket from "socket.io-mock";
 import Manager, { EmittedData } from "../../ws-managers/manager";
-import Time from "../../gtfs/time";
+import Time from "../../providers/time";
 import sinon from "sinon";
 import { expect } from "chai";
 import MockProvider from "../mocks/provider";
