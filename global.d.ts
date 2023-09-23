@@ -15,10 +15,12 @@ declare global {
   type RouteId = string;
   type StopId = string;
 
+  type StopArrival = {
+    arrival_time: Time;
+    trip_id: string;
+  };
+
   interface ArrivalsByStopID {
-    [key: StopId]: {
-      arrival_time: Time;
-      trip_id: string;
-    }[];
+    [key: StopId]: StopArrival[];
   }
 }
