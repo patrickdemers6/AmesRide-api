@@ -10,5 +10,5 @@
     "@typescript-eslint/no-namespace": "off"
   },
   "parser": "@typescript-eslint/parser",
-  "ignorePatterns": ["build/**"]
+  "ignorePatterns": ["build/**", ".github/**"]
 }

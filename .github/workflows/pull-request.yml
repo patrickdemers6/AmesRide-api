@@ -1,0 +1,25 @@
+name: Pull Request
+run-name: "Pull Request #${{ github.event.number }}"
+on: [pull_request]
+
+permissions:
+  checks: write
+  contents: write
+
+jobs:
+  lint:
+    name: lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 18
+      - name: Install Node.js dependencies
+        run: yarn install --immutable --immutable-cache --check-cache
+      - name: Run linters
+        uses: wearerequired/lint-action@v2
+        with:
+          eslint: true
