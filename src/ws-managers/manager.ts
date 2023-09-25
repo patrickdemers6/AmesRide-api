@@ -90,7 +90,7 @@ class Manager<T> {
    * Update internal state with fresh data.
    */
   async #updateData(data): Promise<void> {
-    const [updatedData, isIgnoreSuggested] = data; // await this.provider.#processData();
+    const [updatedData, isIgnoreSuggested] = data;
 
     if (isIgnoreSuggested) {
       if (this.#ignoreCount < 4) {
@@ -136,11 +136,17 @@ class Manager<T> {
   }
 
   /**
-   * Shutsdowmn this manager. It will stop grabbing data and sending it to users.
+   * The number of users currently subscribed to receive data.
+   * @returns number of subscribers
    */
-  kill() {
-    clearInterval(this.#interval);
+  subscriberCount() {
+    return Object.keys(this.subscribers).length;
   }
 }
 
 export default Manager;
+
+export type EmittedData<T> = {
+  data: T;
+  k: string;
+};
