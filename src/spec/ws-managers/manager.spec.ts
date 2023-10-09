@@ -19,7 +19,7 @@ describe("websocket connection manager", () => {
 
     socket = new MockedSocket();
     provider = new MockProvider();
-    manager = new Manager(provider);
+    manager = new Manager("event-name", provider);
   });
 
   afterEach(() => {
@@ -53,7 +53,7 @@ describe("websocket connection manager", () => {
   describe("data emitting", () => {
     context("provider hasn't emitted data", () => {
       it("emits on publish", (done) => {
-        socket.on("data", (data: EmittedData<ArrivalsByStopID>) => {
+        socket.on("event-name", (data: EmittedData<ArrivalsByStopID>) => {
           try {
             expect(data.data).to.deep.equal(emittedData[0][stopId]);
             expect(data.k).to.equal(stopId);
@@ -75,7 +75,7 @@ describe("websocket connection manager", () => {
       });
 
       it("emits data on connect", (done) => {
-        socket.on("data", (data: EmittedData<ArrivalsByStopID>) => {
+        socket.on("event-name", (data: EmittedData<ArrivalsByStopID>) => {
           try {
             expect(data.data).to.deep.equal(emittedData[0][stopId]);
             expect(data.k).to.equal(stopId);
