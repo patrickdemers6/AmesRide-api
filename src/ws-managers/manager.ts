@@ -14,19 +14,12 @@ class Manager<T> {
    */
   data: T;
 
-  eventName: string;
   provider: RealtimeProvider<T>;
-  #interval: NodeJS.Timer;
   #loggingEventType;
 
   #ignoreCount: number;
 
-  constructor(
-    eventName: string,
-    realtimeProvider: RealtimeProvider<T>,
-    loggingEventType = ""
-  ) {
-    this.eventName = eventName;
+  constructor(realtimeProvider: RealtimeProvider<T>, loggingEventType = "") {
     this.provider = realtimeProvider;
     this.#loggingEventType = loggingEventType;
     this.#ignoreCount = 0;
@@ -129,7 +122,7 @@ class Manager<T> {
    */
   #emit(subscriber: { socket: UserSocket; key: string }) {
     if (!this.data) return;
-    subscriber.socket.emit(this.eventName, {
+    subscriber.socket.emit("data", {
       data: this.data[subscriber.key],
       k: subscriber.key,
     });

@@ -26,7 +26,6 @@ StaticGTFS.updateGTFS().then(() => {
   config.providers.forEach((provider) => {
     const realtimeProvider = getRealtimeFactory(provider);
     const manager = new Manager<unknown>(
-      provider.emitName,
       realtimeProvider,
       provider.loggingEventName
     );
