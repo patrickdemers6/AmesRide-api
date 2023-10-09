@@ -3,6 +3,7 @@ const config = {
     {
       type: "vehicle-position",
       source: "gtfs",
+      emitName: "vehicles-on-route",
       subscribePath: "subscribe-route",
       unsubscribePath: "unsubscribe-route",
       loggingEventName: "route",
@@ -14,6 +15,7 @@ const config = {
     {
       type: "arrivals",
       source: "gtfs",
+      emitName: "arrivals",
       subscribePath: "subscribe-arrivals",
       unsubscribePath: "unsubscribe-arrivals",
       loggingEventName: "arrivals",
