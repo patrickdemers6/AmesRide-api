@@ -1,7 +1,7 @@
 class Interval {
   #callback: () => void;
 
-  #interval: NodeJS.Timer;
+  #interval: NodeJS.Timeout;
 
   #seconds: number;
 
