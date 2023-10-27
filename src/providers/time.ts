@@ -6,6 +6,9 @@ class Time {
   minutes: number;
 
   constructor(hours: number, minutes: number) {
+    if (minutes < 0) throw "minutes cannot be negative";
+    if (hours < 0) throw "hours cannot be negative";
+
     this.hours = hours;
     this.minutes = minutes;
   }
@@ -22,8 +25,8 @@ class Time {
     return Time.fromDate(date);
   }
 
-  static fromLong(long: Long) {
-    return Time.fromDate(fromUnixTime(long.toInt()));
+  static fromSeconds(s: number) {
+    return Time.fromDate(new Date(s * 1000));
   }
 
   static copy(time: Time) {
@@ -42,9 +45,14 @@ class Time {
   }
 
   setHours(hours: number) {
+    if (hours < 0) throw "hours cannot be negative";
+
     this.hours = hours;
   }
+
   setMinutes(minutes: number) {
+    if (minutes < 0) throw "minutes cannot be negative";
+
     this.minutes = minutes;
   }
 
