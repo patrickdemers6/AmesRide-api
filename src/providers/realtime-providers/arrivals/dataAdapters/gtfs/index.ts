@@ -74,8 +74,12 @@ class GTFSRealtimeDataAdapter
         const stopSequence = stopTimeUpdate.stopSequence;
         const stop = stopTimeUpdate.stopId;
         const update: RealtimeUpdate = {
-          arrival: Time.fromLong(stopTimeUpdate.arrival.time as Long),
-          departure: Time.fromLong(stopTimeUpdate.departure.time as Long),
+          arrival: Time.fromSeconds(
+            this.#toNumber(stopTimeUpdate.arrival.time)
+          ),
+          departure: Time.fromSeconds(
+            this.#toNumber(stopTimeUpdate.departure.time)
+          ),
           trip: tripId,
           route: trip.tripUpdate.trip.routeId,
           stopSequence: stopSequence,
@@ -85,6 +89,11 @@ class GTFSRealtimeDataAdapter
       });
     });
     return updates;
+  }
+
+  #toNumber(n: number | Long) {
+    if (typeof n === "number") return n;
+    return n.toInt();
   }
 
   #archiveData(data: ArrayBuffer) {

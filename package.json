@@ -6,8 +6,8 @@
   "main": "src/index.ts",
   "scripts": {
     "build": "tsc",
-    "test": "cross-env NODE_ENV=test ts-mocha 'src/spec/**/*.spec.ts'",
-    "test:coverage": "nyc --reporter=html ts-mocha 'src/test/**/*.ts'",
+    "test": "cross-env NODE_ENV=test TZ=UTC ts-mocha 'src/spec/**/*.spec.ts'",
+    "test:coverage": "cross-env NODE_ENV=test TZ=UTC nyc --reporter=html ts-mocha 'src/spec/**/*.ts'",
     "lint": "eslint .",
     "start": "node build/index.js",
     "dev": "npm run build && node build/index.js"
