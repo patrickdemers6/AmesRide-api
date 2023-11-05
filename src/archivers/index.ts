@@ -1,4 +1,4 @@
-import LocalFsArchiver from "./toLocalFs";
+import LocalFsArchiver from "./localFs";
 
 export interface ArchiveManager {
   archive(data: ArrayBuffer, description: string): void;
@@ -19,7 +19,7 @@ const getArchiveManager = (
     case "local":
       return new LocalFsArchiver(options);
     default:
-      throw new TypeError(`Unknown archive manager adapter: ${type}`);
+      throw new TypeError(`Unknown archive manager type: ${type}`);
   }
 };
 

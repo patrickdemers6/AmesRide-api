@@ -6,7 +6,7 @@ import path from "path";
 const component = "dataArchiver/localFs";
 
 /**
- * Archive data needed for future reference.
+ * Archive data to the local file system.
  */
 class LocalFsArchiver implements ArchiveManager {
   #directory: string;
@@ -23,20 +23,19 @@ class LocalFsArchiver implements ArchiveManager {
       fs.mkdirSync(this.#directory, { recursive: true });
     }
 
-    fs.appendFile(filePath, Buffer.from(data), (err) => {
-      if (err) {
-        log.warn({
-          component,
-          message: `failed to store ${description} archive buffer`,
-          error: { message: err.message, stack: err.stack },
-        });
-      } else {
-        log.info({
-          component,
-          message: `stored ${description} archive buffer: '${fileName}'`,
-        });
-      }
-    });
+    try {
+      fs.writeFileSync(filePath, Buffer.from(data));
+      log.info({
+        component,
+        message: `stored ${description} archive buffer: '${fileName}'`,
+      });
+    } catch (err) {
+      log.warn({
+        component,
+        message: `failed to store ${description} archive buffer`,
+        error: { message: err.message, stack: err.stack },
+      });
+    }
   }
 }
 
