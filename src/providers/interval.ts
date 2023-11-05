@@ -11,10 +11,12 @@ class Interval {
   start() {
     this.#callback();
     this.#interval = setInterval(this.#callback, this.#seconds * 1000);
+    return this;
   }
 
   stop() {
     clearInterval(this.#interval);
+    return this;
   }
 }
 

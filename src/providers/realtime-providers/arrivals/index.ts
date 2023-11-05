@@ -3,14 +3,13 @@ import { log } from "../../../monitoring";
 import { RealtimeUpdate } from "./realtimeUpdate";
 import getUpcomingArrivalDataAdapter, {
   RealtimeDataAdapter,
-  RealtimeDataAdapterOptions,
   UpcomingArrivalAdapterType,
 } from "./dataAdapters/realtimeDataAdapter";
 import staticRealtimeCombiner from "./staticRealtimeCombiner";
 import ArrivalsByStop from "./arrivalsByStop";
 import StaticGTFS from "../../static-providers/gtfs/index.d";
 import Time from "../../time";
-
+import { RealtimeDataProviderOptions } from "./index.d";
 const component = "gtfs/realtime-providers/VehiclePositionProvider";
 
 /**
@@ -21,10 +20,10 @@ class ArrivalsProvider
   implements RealtimeProvider<ArrivalsByStopID>
 {
   #dataAdapter: RealtimeDataAdapter;
-  #options: RealtimeDataAdapterOptions;
+  #options: RealtimeDataProviderOptions;
   constructor(
     dataAdapterType: UpcomingArrivalAdapterType,
-    options: RealtimeDataAdapterOptions
+    options: RealtimeDataProviderOptions
   ) {
     super();
     this.#options = options;
@@ -87,6 +86,10 @@ class ArrivalsProvider
       message: `updated vehicles: found data for ${routeCount} routes`,
       count: routeCount,
     });
+  }
+
+  shutdown() {
+    this.#dataAdapter.shutdown();
   }
 }
 

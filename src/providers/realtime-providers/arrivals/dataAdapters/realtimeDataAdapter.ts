@@ -1,5 +1,4 @@
 import { ArchiveManager } from "../../../../archivers";
-import StaticGTFS from "../../../static-providers/gtfs";
 import type { DataAdapter } from "../../dataAdapter";
 import { RealtimeUpdate } from "../realtimeUpdate";
 import GTFSRealtimeDataAdapter from "./gtfs";
@@ -31,8 +30,6 @@ export interface RealtimeDataAdapterOptions {
   // tripToRouteOverrideMode?: OverwriteMode;
 
   frequency: number;
-
-  staticData: StaticGTFS;
 }
 
 export type UpcomingArrivalAdapterType = "gtfs";

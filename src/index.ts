@@ -10,21 +10,21 @@ import setupMonitoring, {
   staticDataRequestTotalBytes,
 } from "./monitoring";
 import config from "./config_new";
-import getRealtimeFactory from "./providers/factory";
+import getRealtimeFactory from "./providers/realtime-providers/factory";
 
 const app = express();
 const httpsServer = http.createServer(app);
 
 setupMonitoring();
 
-export const staticGtfs = new StaticGTFS(config.static);
+const staticGtfs = new StaticGTFS(config.static);
 
 staticGtfs.updateGTFS().then(() => {
   const io = new Server(httpsServer);
 
   const providers = [];
   config.providers.forEach((provider) => {
-    const realtimeProvider = getRealtimeFactory(provider);
+    const realtimeProvider = getRealtimeFactory(provider, staticGtfs);
     const manager = new Manager<unknown>(
       provider.emitName,
       realtimeProvider,

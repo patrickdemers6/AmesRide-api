@@ -131,14 +131,17 @@ class StaticGTFS {
   }
 
   get shapes() {
+    if (!this.#data) return [];
     return this.#data.shapes;
   }
 
   get indexedShapes() {
+    if (!this.#data) return {};
     return indexObjectArrayMultiple(this.#data.shapes, "shape_id");
   }
 
   get routes() {
+    if (!this.#data) return [];
     return this.#data.routes;
   }
 
@@ -159,10 +162,12 @@ class StaticGTFS {
   }
 
   get getFeedInfo() {
+    if (!this.#data) return [];
     return this.#data.feed_info;
   }
 
   get getDirections() {
+    if (!this.#data) return [];
     return this.#data.directions;
   }
 
@@ -174,18 +179,22 @@ class StaticGTFS {
   }
 
   get calendarDates() {
+    if (!this.#data) return [];
     return this.#data.calendar_dates;
   }
 
   get calendarAttributes() {
+    if (!this.#data) return [];
     return this.#data.calendar_attributes;
   }
 
   get agency() {
+    if (!this.#data) return [];
     return this.#data.agency;
   }
 
   get trips() {
+    if (!this.#data) return [];
     return this.#data.trips;
   }
 

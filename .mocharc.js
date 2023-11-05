@@ -1,3 +1,3 @@
 module.exports = {
-  // file: ["src/test/mocha.env.ts"]
+  file: ["src/spec/setup.ts"]
 };

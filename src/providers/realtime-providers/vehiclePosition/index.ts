@@ -32,6 +32,10 @@ class VehiclePositionProvider
     this.#dataAdapter.on("data", this.#handleData.bind(this));
   }
 
+  shutdown() {
+    this.#dataAdapter.shutdown();
+  }
+
   async #handleData(data: [Vehicle[], boolean]) {
     const [vehicleData, isIgnoreSuggested] = data;
 
