@@ -10,7 +10,9 @@ declare global {
     DefaultEventsMap
   >;
 
-  type RealtimeProvider<T> = EventEmitter;
+  type RealtimeProvider<T> = EventEmitter & {
+    shutdown();
+  };
 
   type RouteId = string;
   type StopId = string;

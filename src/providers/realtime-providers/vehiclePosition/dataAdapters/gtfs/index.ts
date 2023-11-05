@@ -26,6 +26,7 @@ class GTFSVehiclePositionDataAdapter
    * Externally provided configuration options to control behavior.
    */
   #options: VehicleDataAdapterOptions;
+  #interval: Interval;
 
   constructor(options: VehicleDataAdapterOptions) {
     super();
@@ -39,7 +40,10 @@ class GTFSVehiclePositionDataAdapter
     };
     this.#options = { ...defaultOptions, ...options };
 
-    new Interval(options.frequency, this.get.bind(this)).start();
+    this.#interval = new Interval(
+      options.frequency,
+      this.get.bind(this)
+    ).start();
   }
 
   /**
@@ -151,6 +155,10 @@ class GTFSVehiclePositionDataAdapter
 
   #archiveData(data: ArrayBuffer) {
     this.#options.archiveManager.archive(data, "vehicle position");
+  }
+
+  shutdown() {
+    this.#interval.stop();
   }
 }
 

@@ -16,13 +16,16 @@ class GTFSRealtimeDataAdapter
   extends EventEmitter
   implements RealtimeDataAdapter
 {
-  isIgnoreDataSuggested: boolean;
   #options: RealtimeDataAdapterOptions;
+  #interval: Interval;
   constructor(options: RealtimeDataAdapterOptions) {
     super();
     this.#options = options;
 
-    new Interval(this.#options.frequency, this.get.bind(this)).start();
+    this.#interval = new Interval(
+      this.#options.frequency,
+      this.get.bind(this)
+    ).start();
   }
 
   async get() {
@@ -45,9 +48,6 @@ class GTFSRealtimeDataAdapter
     });
 
     const tripUpdateBuffer = await tripUpdateResponse.arrayBuffer();
-    // the buffer is sometimes empty due to provider issues
-    // suggest keeping last good data so users are not disrupted
-    this.isIgnoreDataSuggested = tripUpdateBuffer.byteLength === 15;
 
     log.debug({
       component,
@@ -98,6 +98,10 @@ class GTFSRealtimeDataAdapter
 
   #archiveData(data: ArrayBuffer) {
     this.#options.archiveManager.archive(data, "trip updates");
+  }
+
+  shutdown() {
+    this.#interval.stop();
   }
 }
 

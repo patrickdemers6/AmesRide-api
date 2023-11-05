@@ -1,6 +1,6 @@
-import { staticGtfs } from "../../../..";
 import { ArchiveManager } from "../../../../archivers";
 import { indexObjectArray } from "../../../../utils/indexObjectArray";
+import StaticGTFS from "../../../static-providers/gtfs";
 import type { DataAdapter } from "../../dataAdapter";
 import { Vehicle } from "../vehicle";
 import GTFSVehiclePositionDataAdapter from "./gtfs";
@@ -47,6 +47,8 @@ export interface VehicleDataAdapterOptions {
   tripToRouteOverrideMode?: OverwriteMode;
 
   frequency: number;
+
+  staticData: StaticGTFS;
 }
 
 /**
@@ -60,7 +62,7 @@ export const getVehiclePositionDataAdapter = (
   options?: VehicleDataAdapterOptions
 ): VehicleDataAdapter => {
   const tripToRoute = {};
-  const trips = indexObjectArray(staticGtfs.trips, "trip_id");
+  const trips = indexObjectArray(options.staticData.trips, "trip_id");
   Object.keys(trips).forEach((trip) => {
     tripToRoute[trip] = trips[trip].route_id;
   });

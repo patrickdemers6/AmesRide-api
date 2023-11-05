@@ -1,8 +1,9 @@
 import fs from "fs";
 import { log } from "../monitoring";
 import { ArchiveManager, ArchiveManagerOptions } from ".";
+import path from "path";
 
-const component = "gtfs/dataArchiver";
+const component = "dataArchiver/localFs";
 
 /**
  * Archive data needed for future reference.
@@ -13,9 +14,14 @@ class LocalFsArchiver implements ArchiveManager {
   constructor(options: ArchiveManagerOptions) {
     this.#directory = options.directory;
   }
+
   archive(data: ArrayBuffer, description: string) {
     const fileName = new Date().toISOString();
-    const filePath = `${this.#directory}${fileName}`;
+    const filePath = path.join(this.#directory, fileName);
+
+    if (!fs.existsSync(this.#directory)) {
+      fs.mkdirSync(this.#directory, { recursive: true });
+    }
 
     fs.appendFile(filePath, Buffer.from(data), (err) => {
       if (err) {
